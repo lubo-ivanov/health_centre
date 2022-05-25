@@ -1,20 +1,22 @@
 package projects.healthcentre.model.entity;
 
+import org.hibernate.persister.walking.spi.CollectionDefinition;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "products")
-public class Product extends BaseEntity {
+public class Products extends BaseEntity {
     private String name;
     private Integer calories;
     private String units;
 
-    public Product() {
+    public Products() {
     }
 
-    @Column
+    @Column(columnDefinition = "VARCHAR(15)", nullable = false, unique = true)
     public String getName() {
         return name;
     }
@@ -23,7 +25,7 @@ public class Product extends BaseEntity {
         this.name = name;
     }
 
-    @Column
+    @Column(nullable = false)
     public Integer getCalories() {
         return calories;
     }
@@ -32,7 +34,7 @@ public class Product extends BaseEntity {
         this.calories = calories;
     }
 
-    @Column
+    @Column(nullable = false)
     public String getUnits() {
         return units;
     }
