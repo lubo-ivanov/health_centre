@@ -15,7 +15,6 @@ id INT auto_increment primary key,
 name VARCHAR (30) unique not null,
 meal_type_id INT not null,
 description TEXT,	
-recipe_id INT not null,
 constraint fk_meal_type_id
 foreign key (meal_type_id)
 references meal_types(id)
