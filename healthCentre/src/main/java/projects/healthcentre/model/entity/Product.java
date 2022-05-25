@@ -4,16 +4,20 @@ import org.hibernate.persister.walking.spi.CollectionDefinition;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "products")
-public class Products extends BaseEntity {
+public class Product extends BaseEntity {
     private String name;
     private Integer calories;
     private String units;
+    private Set<MealProducts> mealProducts = new HashSet<>();
 
-    public Products() {
+    public Product() {
     }
 
     @Column(columnDefinition = "VARCHAR(15)", nullable = false, unique = true)
@@ -41,6 +45,15 @@ public class Products extends BaseEntity {
 
     public void setUnits(String units) {
         this.units = units;
+    }
+
+    @OneToMany(mappedBy = "product")
+    public Set<MealProducts> getMealProducts() {
+        return mealProducts;
+    }
+
+    public void setMealProducts(Set<MealProducts> mealProducts) {
+        this.mealProducts = mealProducts;
     }
 }
 

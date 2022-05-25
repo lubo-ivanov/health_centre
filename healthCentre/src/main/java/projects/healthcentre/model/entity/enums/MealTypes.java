@@ -1,4 +1,4 @@
-package projects.healthcentre.model.entity;
+package projects.healthcentre.model.entity.enums;
 
 public enum MealTypes{
     BREAKFAST,LUNCH, DINNER, SNACK
