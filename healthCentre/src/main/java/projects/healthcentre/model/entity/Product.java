@@ -1,11 +1,9 @@
 package projects.healthcentre.model.entity;
 
 import org.hibernate.persister.walking.spi.CollectionDefinition;
+import projects.healthcentre.model.entity.enums.ProductType;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,6 +13,7 @@ public class Product extends BaseEntity {
     private String name;
     private Integer calories;
     private String units;
+    private ProductType productType;
     private Set<MealProducts> mealProducts = new HashSet<>();
 
     public Product() {
@@ -45,6 +44,16 @@ public class Product extends BaseEntity {
 
     public void setUnits(String units) {
         this.units = units;
+    }
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "product_type")
+    public ProductType getProductType() {
+        return productType;
+    }
+
+    public void setProductType(ProductType productType) {
+        this.productType = productType;
     }
 
     @OneToMany(mappedBy = "product")

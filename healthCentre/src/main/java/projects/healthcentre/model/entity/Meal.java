@@ -13,6 +13,7 @@ public class Meal extends BaseEntity{
     private MealTypes mealType;
     private String description;
 
+
     private Set<MealProducts> mealProducts = new HashSet<>();
 
     public Meal() {
