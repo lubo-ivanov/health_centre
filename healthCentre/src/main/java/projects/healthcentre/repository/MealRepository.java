@@ -6,4 +6,5 @@ import projects.healthcentre.model.entity.Meal;
 
 @Repository
 public interface MealRepository extends JpaRepository<Meal, Long> {
+    Meal getMealById(Long id);
 }
