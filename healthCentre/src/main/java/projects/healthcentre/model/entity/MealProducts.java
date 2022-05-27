@@ -1,6 +1,7 @@
 package projects.healthcentre.model.entity;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 public class MealProducts extends BaseEntity {
@@ -38,5 +39,18 @@ public class MealProducts extends BaseEntity {
 
     public void setProductQuantity(Integer productQuantity) {
         this.productQuantity = productQuantity;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MealProducts that = (MealProducts) o;
+        return meal.equals(that.meal) && product.equals(that.product);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(meal, product);
     }
 }
