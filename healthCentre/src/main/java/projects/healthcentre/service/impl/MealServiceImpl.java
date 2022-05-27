@@ -2,6 +2,7 @@ package projects.healthcentre.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import projects.healthcentre.model.dto.AllMealsDto;
 import projects.healthcentre.model.dto.MealWithProductsAndTotalCaloriesDto;
 import projects.healthcentre.model.entity.Meal;
 import projects.healthcentre.model.entity.Product;
@@ -9,6 +10,7 @@ import projects.healthcentre.repository.MealRepository;
 import projects.healthcentre.repository.ProductRepository;
 import projects.healthcentre.service.MealService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -34,5 +36,14 @@ public class MealServiceImpl implements MealService {
                 .mapToInt(Integer::intValue)
                 .sum());
         return mealWithProducts;
+    }
+
+    @Override
+    public AllMealsDto getAllMeals() {
+        AllMealsDto allMeals = new AllMealsDto();
+        for (long i = 1; i <= mealRepository.count(); i++) {
+            allMeals.addMeal(getMealAndProductsById(i));
+        }
+        return allMeals;
     }
 }
