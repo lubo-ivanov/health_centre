@@ -10,8 +10,8 @@ import projects.healthcentre.repository.MealRepository;
 import projects.healthcentre.repository.ProductRepository;
 import projects.healthcentre.service.MealService;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 public class MealServiceImpl implements MealService {
@@ -29,6 +29,7 @@ public class MealServiceImpl implements MealService {
         MealWithProductsAndTotalCaloriesDto mealWithProducts = new MealWithProductsAndTotalCaloriesDto();
         Meal meal = mealRepository.getMealById(id);
         mealWithProducts.setName(meal.getName());
+        mealWithProducts.setMealType(meal.getMealType());
         List<Product> products = productRepository.findAllProductsByMealId(id);
         mealWithProducts.setProducts(products);
         mealWithProducts.setTotalCalories(products.stream()
@@ -46,4 +47,23 @@ public class MealServiceImpl implements MealService {
         }
         return allMeals;
     }
+
+    @Override
+    public Set<MealWithProductsAndTotalCaloriesDto> offerMealPlan() {
+        int totalCalories = 0;
+        Set<MealWithProductsAndTotalCaloriesDto> mealPlan = new LinkedHashSet<>();
+        int randomIndex = ThreadLocalRandom.current().nextInt(0, getAllMeals().getAllMeals().size());
+        MealWithProductsAndTotalCaloriesDto breakfast = getAllMeals()
+                .getAllMeals()
+                .stream()
+                .filter(meal -> meal.getMealType().toString().equalsIgnoreCase("breakfast"))
+                .toList()
+                .get(randomIndex);
+        mealPlan.add(breakfast);
+        totalCalories += breakfast.getTotalCalories();
+        //TODO Add lunch and dinner!
+        return mealPlan;
+    }
+
+
 }
