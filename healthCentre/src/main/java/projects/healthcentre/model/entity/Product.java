@@ -1,7 +1,6 @@
 package projects.healthcentre.model.entity;
 
-import org.hibernate.persister.walking.spi.CollectionDefinition;
-import projects.healthcentre.model.entity.enums.ProductType;
+import projects.healthcentre.model.enums.ProductType;
 
 import javax.persistence.*;
 import java.util.HashSet;
