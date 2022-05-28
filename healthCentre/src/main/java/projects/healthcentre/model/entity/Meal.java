@@ -1,6 +1,6 @@
 package projects.healthcentre.model.entity;
 
-import projects.healthcentre.model.entity.enums.MealTypes;
+import projects.healthcentre.model.enums.MealType;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -10,7 +10,7 @@ import java.util.Set;
 @Table(name = "meals")
 public class Meal extends BaseEntity{
     private String name;
-    private MealTypes mealType;
+    private MealType mealType;
     private String description;
 
 
@@ -30,11 +30,11 @@ public class Meal extends BaseEntity{
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    public MealTypes getMealType() {
+    public MealType getMealType() {
         return mealType;
     }
 
-    public void setMealType(MealTypes mealType) {
+    public void setMealType(MealType mealType) {
         this.mealType = mealType;
     }
 
