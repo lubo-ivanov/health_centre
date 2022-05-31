@@ -39,7 +39,8 @@ public class SignUpController {
             return "index";
         }
 
-        return "login";
+        //TODO: return something proper
+        return "success";
     }
 
 }

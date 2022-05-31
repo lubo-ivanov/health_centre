@@ -1,7 +1,8 @@
-package projects.healthcentre.util;
+package projects.healthcentre.util.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import projects.healthcentre.util.ValidationUtil;
 
 import javax.validation.Validator;
 
