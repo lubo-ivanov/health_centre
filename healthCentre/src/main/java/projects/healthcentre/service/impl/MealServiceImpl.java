@@ -55,7 +55,7 @@ public class MealServiceImpl implements MealService {
     @Override
     /* Create a meal plan with breakfast taking 30%, lunch 40% and dinner 30% */
     //TODO: Optimize the ratio if needed - e.g 32-38-30
-    public Set<MealWithProductsAndTotalCaloriesDto> offerMealPlan(Double requestedCalories) {
+    public Set<MealWithProductsAndTotalCaloriesDto> offerMealPlan(double requestedCalories) {
         Set<MealWithProductsAndTotalCaloriesDto> mealPlan = new LinkedHashSet<>();
         mealPlan.add(getMeal(0D, requestedCalories * 0.3, "breakfast"));
         mealPlan.add(getMeal(0D, requestedCalories * 0.4, "lunch"));
@@ -64,7 +64,7 @@ public class MealServiceImpl implements MealService {
     }
 
     /* provide a mea; pf certain type, filtered by meal type and calories. If no meal is found, increment calories difference by 0.5 */
-    private MealWithProductsAndTotalCaloriesDto getMeal(double coefficient, Double requestedCaloriesForMeal, String mealType) {
+    private MealWithProductsAndTotalCaloriesDto getMeal(double coefficient, double requestedCaloriesForMeal, String mealType) {
         double finalCoefficient = coefficient + 0.5;
         List<MealWithProductsAndTotalCaloriesDto> meals = getAllMeals()
                 .getAllMeals()

@@ -9,5 +9,5 @@ import java.util.Set;
 public interface MealService {
     MealWithProductsAndTotalCaloriesDto getMealAndProductsById(Long id);
     AllMealsDto getAllMeals();
-    Set<MealWithProductsAndTotalCaloriesDto> offerMealPlan(Double requestedCalories);
+    Set<MealWithProductsAndTotalCaloriesDto> offerMealPlan(double requestedCalories);
 }
