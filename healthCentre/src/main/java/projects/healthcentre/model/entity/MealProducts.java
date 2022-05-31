@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
+@Table(name = "meals_products")
 public class MealProducts extends BaseEntity {
     private Meal meal;
     private Product product;
