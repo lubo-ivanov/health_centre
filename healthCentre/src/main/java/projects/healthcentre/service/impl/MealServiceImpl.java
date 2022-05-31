@@ -49,20 +49,29 @@ public class MealServiceImpl implements MealService {
     }
 
     @Override
-    public Set<MealWithProductsAndTotalCaloriesDto> offerMealPlan() {
-        int totalCalories = 0;
+    public Set<MealWithProductsAndTotalCaloriesDto> offerMealPlan(Double requestedCalories) {
         Set<MealWithProductsAndTotalCaloriesDto> mealPlan = new LinkedHashSet<>();
-        int randomIndex = ThreadLocalRandom.current().nextInt(0, getAllMeals().getAllMeals().size());
-        MealWithProductsAndTotalCaloriesDto breakfast = getAllMeals()
+        getMeal(0D, requestedCalories * 0.3, mealPlan, "breakfast");
+        getMeal(0D, requestedCalories * 0.4, mealPlan, "lunch");
+        getMeal(0D, requestedCalories * 0.3, mealPlan, "dinner");
+        return mealPlan;
+    }
+
+    private void getMeal(double coefficient, Double requestedCaloriesForMeal, Set<MealWithProductsAndTotalCaloriesDto> mealPlan, String mealType) {
+        double finalCoefficient = coefficient + 0.5;
+        List<MealWithProductsAndTotalCaloriesDto> meals = getAllMeals()
                 .getAllMeals()
                 .stream()
-                .filter(meal -> meal.getMealType().toString().equalsIgnoreCase("breakfast"))
-                .toList()
-                .get(randomIndex);
-        mealPlan.add(breakfast);
-        totalCalories += breakfast.getTotalCalories();
-        //TODO Add lunch and dinner!
-        return mealPlan;
+                .filter(m -> m.getMealType().toString().equalsIgnoreCase(mealType))
+                .filter(m -> m.getTotalCalories() <= requestedCaloriesForMeal * (1 + finalCoefficient)
+                             && m.getTotalCalories() >= requestedCaloriesForMeal * (1 - finalCoefficient))
+                .toList();
+        if (!meals.isEmpty()) {
+            int randomIndex = ThreadLocalRandom.current().nextInt(0, meals.size());
+            mealPlan.add(meals.get(randomIndex));
+        } else {
+            getMeal(finalCoefficient, requestedCaloriesForMeal, mealPlan, mealType);
+        }
     }
 
 
