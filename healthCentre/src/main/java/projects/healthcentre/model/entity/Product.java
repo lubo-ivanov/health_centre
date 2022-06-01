@@ -14,6 +14,7 @@ public class Product extends BaseEntity {
     private String units;
     private ProductType productType;
     private Set<MealProducts> mealProducts = new HashSet<>();
+    private Picture picture;
 
     public Product() {
     }
@@ -46,7 +47,7 @@ public class Product extends BaseEntity {
     }
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "product_type")
+    @Column(name = "product_type", nullable = false)
     public ProductType getProductType() {
         return productType;
     }
@@ -62,6 +63,15 @@ public class Product extends BaseEntity {
 
     public void setMealProducts(Set<MealProducts> mealProducts) {
         this.mealProducts = mealProducts;
+    }
+
+    @OneToOne
+    public Picture getPicture() {
+        return picture;
+    }
+
+    public void setPicture(Picture picture) {
+        this.picture = picture;
     }
 }
 
