@@ -8,10 +8,12 @@ import java.util.Set;
 
 @Entity
 @Table(name = "meals")
-public class Meal extends BaseEntity{
+public class Meal extends BaseEntity {
     private String name;
     private MealType mealType;
     private String description;
+    private String videoUrl;
+    private Set<Picture> picture;
 
 
     private Set<MealProducts> mealProducts = new HashSet<>();
@@ -19,7 +21,7 @@ public class Meal extends BaseEntity{
     public Meal() {
     }
 
-    @Column (nullable = false, unique = true, columnDefinition = "VARCHAR(30)")
+    @Column(nullable = false, unique = true, columnDefinition = "VARCHAR(30)")
     public String getName() {
         return name;
     }
@@ -28,8 +30,8 @@ public class Meal extends BaseEntity{
         this.name = name;
     }
 
-    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
+    @Column(name = "meal_type", nullable = false)
     public MealType getMealType() {
         return mealType;
     }
@@ -54,5 +56,23 @@ public class Meal extends BaseEntity{
 
     public void setMealProducts(Set<MealProducts> mealProducts) {
         this.mealProducts = mealProducts;
+    }
+
+    @Column(name = "video_url")
+    public String getVideoUrl() {
+        return videoUrl;
+    }
+
+    public void setVideoUrl(String videoUrl) {
+        this.videoUrl = videoUrl;
+    }
+
+    @OneToMany
+    public Set<Picture> getPicture() {
+        return picture;
+    }
+
+    public void setPicture(Set<Picture> picture) {
+        this.picture = picture;
     }
 }
