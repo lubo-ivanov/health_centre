@@ -1,9 +1,8 @@
 package projects.healthcentre.model.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import projects.healthcentre.model.enums.UserType;
+
+import javax.persistence.*;
 import java.util.Set;
 
 @Entity
@@ -15,7 +14,7 @@ public class User extends BaseEntity {
     private String userName;
     private String email;
     private String password;
-    private String userType;
+    private UserType userType;
     private Set<Meal> mealPlan;
 
     public User() {
@@ -66,12 +65,13 @@ public class User extends BaseEntity {
         this.password = password;
     }
 
-    @Column(nullable = false)
-    public String getUserType() {
+    @Enumerated(EnumType.STRING)
+    @Column(name = "user_type", nullable = false)
+    public UserType getUserType() {
         return userType;
     }
 
-    public void setUserType(String userType) {
+    public void setUserType(UserType userType) {
         this.userType = userType;
     }
 
