@@ -7,7 +7,7 @@ import projects.healthcentre.model.dto.MealWithProductsAndTotalCaloriesDto;
 import java.util.Set;
 
 public interface MealService {
-    MealWithProductsAndTotalCaloriesDto getMealAndProductsById(Long id);
+    MealWithProductsAndTotalCaloriesDto getMealById(Long id);
     AllMealsDto getAllMeals();
     Set<MealWithProductsAndTotalCaloriesDto> offerMealPlan(double requestedCalories);
 }

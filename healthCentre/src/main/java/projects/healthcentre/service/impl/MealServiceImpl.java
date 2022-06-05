@@ -27,7 +27,7 @@ public class MealServiceImpl implements MealService {
 
     @Override
     /* Get a meal and all of its products by Meal ID */
-    public MealWithProductsAndTotalCaloriesDto getMealAndProductsById(Long id) {
+    public MealWithProductsAndTotalCaloriesDto getMealById(Long id) {
         MealWithProductsAndTotalCaloriesDto mealWithProducts = new MealWithProductsAndTotalCaloriesDto();
         Meal meal = mealRepository.getMealById(id);
         mealWithProducts.setName(meal.getName());
@@ -47,7 +47,7 @@ public class MealServiceImpl implements MealService {
     public AllMealsDto getAllMeals() {
         AllMealsDto allMeals = new AllMealsDto();
         for (long i = 1; i <= mealRepository.count(); i++) {
-            allMeals.addMeal(getMealAndProductsById(i));
+            allMeals.addMeal(getMealById(i));
         }
         return allMeals;
     }
