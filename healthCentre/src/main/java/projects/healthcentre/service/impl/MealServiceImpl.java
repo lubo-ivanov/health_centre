@@ -55,7 +55,7 @@ public class MealServiceImpl implements MealService {
 
     @Override
     /* Create a meal plan with breakfast taking 30%, lunch 40% and dinner 30% */
-    //TODO: Optimize the ratio if needed - e.g 32-38-30
+    //Note: Optimize the ratio if needed - e.g 32-38-30
     public Set<MealWithProductsAndTotalCaloriesDto> offerMealPlan(double requestedCalories) {
         Set<MealWithProductsAndTotalCaloriesDto> mealPlan = new LinkedHashSet<>();
         mealPlan.add(getMeal(0D, requestedCalories * 0.3, "breakfast"));
