@@ -3,6 +3,7 @@ package projects.healthcentre.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import projects.healthcentre.model.dto.AllMealsDto;
+import projects.healthcentre.model.dto.MealSeedDto;
 import projects.healthcentre.model.dto.MealWithProductsAndTotalCaloriesDto;
 import projects.healthcentre.model.entity.Meal;
 import projects.healthcentre.model.entity.Product;
@@ -63,6 +64,14 @@ public class MealServiceImpl implements MealService {
         return mealPlan;
     }
 
+    @Override
+    public Meal saveMeal(MealSeedDto mealSeedDto) {
+        Meal savedMeal = new Meal();
+        //todo Implement mapping mealSeedDto to Meal entity
+        mealRepository.save(savedMeal);
+        return savedMeal;
+    }
+
     /* provide a mea; pf certain type, filtered by meal type and calories. If no meal is found, increment calories difference by 0.5 */
     private MealWithProductsAndTotalCaloriesDto getMeal(double coefficient, double requestedCaloriesForMeal, String mealType) {
         double finalCoefficient = coefficient + 0.5;
@@ -71,7 +80,7 @@ public class MealServiceImpl implements MealService {
                 .stream()
                 .filter(m -> m.getMealType().toString().equalsIgnoreCase(mealType))
                 .filter(m -> m.getTotalCalories() <= requestedCaloriesForMeal * (1 + finalCoefficient)
-                             && m.getTotalCalories() >= requestedCaloriesForMeal * (1 - finalCoefficient))
+                        && m.getTotalCalories() >= requestedCaloriesForMeal * (1 - finalCoefficient))
                 .toList();
         if (!meals.isEmpty()) {
             int randomIndex = ThreadLocalRandom.current().nextInt(0, meals.size());
