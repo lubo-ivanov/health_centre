@@ -1,5 +1,6 @@
-package projects.healthcentre.Config;
+package projects.healthcentre.config;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -10,7 +11,12 @@ import javax.validation.Validator;
 public class ApplicationBeanConfiguration {
 
     @Bean
-public Validator validator() {
+    public Validator validator() {
         return Validation.buildDefaultValidatorFactory().getValidator();
+    }
+
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
     }
 }
