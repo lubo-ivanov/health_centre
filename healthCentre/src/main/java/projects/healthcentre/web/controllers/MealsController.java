@@ -10,6 +10,8 @@ import projects.healthcentre.model.dto.MealWithProductsAndTotalCaloriesDto;
 import projects.healthcentre.model.entity.Meal;
 import projects.healthcentre.service.MealService;
 
+import java.util.Set;
+
 @RequestMapping("/api/v1/meals")
 @RestController
 public class MealsController {
@@ -30,6 +32,14 @@ public class MealsController {
     private ResponseEntity<AllMealsDto> getAllMeals() {
         return new ResponseEntity<>(mealService.getAllMeals(), HttpStatus.OK);
     }
+
+    @GetMapping({"/plan/{calories}"})
+    private ResponseEntity<Set<MealWithProductsAndTotalCaloriesDto>> getMealPlan (@PathVariable ("calories") Long calories) {
+        return new ResponseEntity<>(mealService.offerMealPlan(calories), HttpStatus.OK);
+    }
+
+
+
 
     @PostMapping
     private ResponseEntity<String> createMeal(MealSeedDto mealSeedDto) {
