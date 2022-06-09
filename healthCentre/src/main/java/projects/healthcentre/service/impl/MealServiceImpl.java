@@ -1,5 +1,6 @@
 package projects.healthcentre.service.impl;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import projects.healthcentre.model.dto.AllMealsDto;
@@ -18,11 +19,13 @@ import java.util.concurrent.ThreadLocalRandom;
 public class MealServiceImpl implements MealService {
     private final MealRepository mealRepository;
     private final ProductRepository productRepository;
+    private final ModelMapper modelMapper;
 
     @Autowired
-    public MealServiceImpl(MealRepository mealRepository, ProductRepository productRepository) {
+    public MealServiceImpl(MealRepository mealRepository, ProductRepository productRepository, ModelMapper modelMapper) {
         this.mealRepository = mealRepository;
         this.productRepository = productRepository;
+        this.modelMapper = modelMapper;
     }
 
 
@@ -67,7 +70,7 @@ public class MealServiceImpl implements MealService {
     @Override
     public Meal saveMeal(MealSeedDto mealSeedDto) {
         Meal savedMeal = new Meal();
-        //todo Implement mapping mealSeedDto to Meal entity
+        modelMapper.map(mealSeedDto, Meal.class);
         mealRepository.save(savedMeal);
         return savedMeal;
     }
