@@ -10,10 +10,6 @@ import javax.validation.Validator;
 @Configuration
 public class ApplicationBeanConfiguration {
 
-    @Bean
-    public Validator validator() {
-        return Validation.buildDefaultValidatorFactory().getValidator();
-    }
 
     @Bean
     public ModelMapper modelMapper() {

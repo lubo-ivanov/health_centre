@@ -4,15 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import projects.healthcentre.util.ValidationUtil;
 
+import javax.validation.Validation;
 import javax.validation.Validator;
 
 @Component
 public class ValidationUtilImpl implements ValidationUtil {
     private final Validator validator;
 
-    @Autowired
-    public ValidationUtilImpl(Validator validator) {
-        this.validator = validator;
+    public ValidationUtilImpl() {
+        this.validator = Validation.buildDefaultValidatorFactory().getValidator();
     }
 
 

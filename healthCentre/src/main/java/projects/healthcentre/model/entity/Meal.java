@@ -1,5 +1,9 @@
 package projects.healthcentre.model.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import projects.healthcentre.model.enums.MealType;
 
 import javax.persistence.*;
@@ -15,11 +19,10 @@ public class Meal extends BaseEntity {
     private String videoUrl;
     private Set<Picture> picture;
 
-
-    private Set<MealProducts> mealProducts = new HashSet<>();
-
     public Meal() {
     }
+
+    private Set<MealProducts> mealProducts = new HashSet<>();
 
     @Column(nullable = false, unique = true, columnDefinition = "VARCHAR(30)")
     public String getName() {

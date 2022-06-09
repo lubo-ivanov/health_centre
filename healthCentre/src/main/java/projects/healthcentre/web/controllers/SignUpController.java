@@ -9,18 +9,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import projects.healthcentre.model.dto.SignUpInputDto;
+import projects.healthcentre.util.ValidationUtil;
 
 import javax.validation.Valid;
-import javax.validation.Validator;
 
 @Controller
 @RequestMapping("/")
 public class SignUpController {
-    private final Validator validator;
+    private final ValidationUtil validationUtil;
 
     @Autowired
-    public SignUpController(Validator validator) {
-        this.validator = validator;
+    public SignUpController(ValidationUtil validationUtil) {
+        this.validationUtil = validationUtil;
     }
 
     @GetMapping
@@ -32,14 +32,12 @@ public class SignUpController {
 
     @PostMapping
     private String createUser(@Valid SignUpInputDto signUpInputDto, BindingResult bindingResult) {
-        if (!validator.validate(signUpInputDto).isEmpty()) {
+        if (!validationUtil.isValid(signUpInputDto)) {
             return "index";
         }
         if (bindingResult.hasErrors()) {
             return "index";
         }
-
-        //TODO: return something proper
         return "success";
     }
 

@@ -92,7 +92,6 @@ public class MealServiceImpl implements MealService {
             //TODO: If there is no meal of a certain meal type - breakfast, lunch, dinner, there will be a constant loop. FIXIT
             return getMeal(finalCoefficient, requestedCaloriesForMeal, mealType);
         }
-
     }
 
 
