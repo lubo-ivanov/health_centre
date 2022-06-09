@@ -71,6 +71,7 @@ public class MealServiceImpl implements MealService {
     public Meal saveMeal(MealSeedDto mealSeedDto) {
         Meal savedMeal = new Meal();
         modelMapper.map(mealSeedDto, Meal.class);
+        //TODO link meal with products and quantities in the linking table
         mealRepository.save(savedMeal);
         return savedMeal;
     }

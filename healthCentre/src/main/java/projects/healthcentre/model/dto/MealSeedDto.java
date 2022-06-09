@@ -3,6 +3,8 @@ package projects.healthcentre.model.dto;
 import projects.healthcentre.model.entity.Picture;
 import projects.healthcentre.model.enums.MealType;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 public class MealSeedDto {
@@ -11,8 +13,10 @@ public class MealSeedDto {
     private String description;
     private String videoUrl;
     private Set<Picture> picture;
+    private Map<String, Integer> productWithQuantity;
 
     public MealSeedDto() {
+        this.productWithQuantity = new HashMap<>();
     }
 
     public String getName() {
@@ -53,5 +57,13 @@ public class MealSeedDto {
 
     public void setPicture(Set<Picture> picture) {
         this.picture = picture;
+    }
+
+    public Map<String, Integer> getProductWithQuantity() {
+        return productWithQuantity;
+    }
+
+    public void setProductWithQuantity(Map<String, Integer> productWithQuantity) {
+        this.productWithQuantity = productWithQuantity;
     }
 }

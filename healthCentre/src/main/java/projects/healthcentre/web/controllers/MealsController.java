@@ -34,11 +34,9 @@ public class MealsController {
     }
 
     @GetMapping({"/plan/{calories}"})
-    private ResponseEntity<Set<MealWithProductsAndTotalCaloriesDto>> getMealPlan (@PathVariable ("calories") Long calories) {
+    private ResponseEntity<Set<MealWithProductsAndTotalCaloriesDto>> getMealPlan(@PathVariable("calories") Long calories) {
         return new ResponseEntity<>(mealService.offerMealPlan(calories), HttpStatus.OK);
     }
-
-
 
 
     @PostMapping
