@@ -12,70 +12,32 @@ import java.util.Set;
 
 @Entity
 @Table(name = "meals")
-public class Meal extends BaseEntity {
-    private String name;
-    private MealType mealType;
-    private String description;
-    private String videoUrl;
-    private Set<Picture> picture;
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class Meal {
 
-    public Meal() {
-    }
-
-    private Set<MealProducts> mealProducts = new HashSet<>();
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(nullable = false, unique = true, columnDefinition = "VARCHAR(30)")
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+    private String name;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "meal_type", nullable = false)
-    public MealType getMealType() {
-        return mealType;
-    }
-
-    public void setMealType(MealType mealType) {
-        this.mealType = mealType;
-    }
+    private MealType mealType;
 
     @Column(columnDefinition = "TEXT")
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    @OneToMany(mappedBy = "meal")
-    public Set<MealProducts> getMealProducts() {
-        return mealProducts;
-    }
-
-    public void setMealProducts(Set<MealProducts> mealProducts) {
-        this.mealProducts = mealProducts;
-    }
+    private String description;
 
     @Column(name = "video_url")
-    public String getVideoUrl() {
-        return videoUrl;
-    }
-
-    public void setVideoUrl(String videoUrl) {
-        this.videoUrl = videoUrl;
-    }
+    private String videoUrl;
 
     @OneToMany
-    public Set<Picture> getPicture() {
-        return picture;
-    }
+    private Set<Picture> picture;
+    @OneToMany(mappedBy = "meal")
+    private Set<MealProducts> mealProducts;
 
-    public void setPicture(Set<Picture> picture) {
-        this.picture = picture;
-    }
 }
