@@ -35,13 +35,13 @@ public class MealsController {
     }
 
     @GetMapping({"/plan"})
-    private ResponseEntity<Set<MealWithProductsAndTotalCaloriesDto>> getMealPlan(CaloriesInputProfileDto caloriesInputProfileDto) {
+    private ResponseEntity<Set<MealWithProductsAndTotalCaloriesDto>> getMealPlan(@RequestBody CaloriesInputProfileDto caloriesInputProfileDto) {
         return new ResponseEntity<>(mealService.offerMealPlan(caloriesInputProfileDto), HttpStatus.OK);
     }
 
 
     @PostMapping
-    private ResponseEntity<String> createMeal(MealSeedDto mealSeedDto) {
+    private ResponseEntity<String> createMeal(@RequestBody MealSeedDto mealSeedDto) {
         Meal savedMeal = mealService.saveMeal(mealSeedDto);
         String location = "/api/v1/meals" + savedMeal.getId().toString();
         return new ResponseEntity<>(location, HttpStatus.CREATED);
