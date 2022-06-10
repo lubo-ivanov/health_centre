@@ -4,6 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import projects.healthcentre.model.dto.AllMealsDto;
+import projects.healthcentre.model.dto.CaloriesInputProfileDto;
 import projects.healthcentre.model.dto.MealSeedDto;
 import projects.healthcentre.model.dto.MealWithProductsAndTotalCaloriesDto;
 import projects.healthcentre.model.entity.Meal;
@@ -59,12 +60,41 @@ public class MealServiceImpl implements MealService {
     @Override
     /* Create a meal plan with breakfast taking 30%, lunch 40% and dinner 30% */
     //Note: Optimize the ratio if needed - e.g 32-38-30
-    public Set<MealWithProductsAndTotalCaloriesDto> offerMealPlan(double requestedCalories) {
+    public Set<MealWithProductsAndTotalCaloriesDto> offerMealPlan(CaloriesInputProfileDto caloriesInputProfileDto) {
         Set<MealWithProductsAndTotalCaloriesDto> mealPlan = new LinkedHashSet<>();
+        double requestedCalories = calculateCalories(caloriesInputProfileDto);
         mealPlan.add(getMeal(0D, requestedCalories * 0.3, "breakfast"));
         mealPlan.add(getMeal(0D, requestedCalories * 0.4, "lunch"));
         mealPlan.add(getMeal(0D, requestedCalories * 0.3, "dinner"));
         return mealPlan;
+    }
+
+    private double calculateCalories(CaloriesInputProfileDto caloriesInputProfileDto) {
+        double calories = 0D;
+        calories = caloriesInputProfileDto.getGender().toString().equalsIgnoreCase("male")
+                ? (88.4 + 13.4 * caloriesInputProfileDto.getWeight())
+                + (4.8 * caloriesInputProfileDto.getHeight()) - (5.68 * caloriesInputProfileDto.getAge())
+                : (447.6 + 9.25 * caloriesInputProfileDto.getWeight())
+                + (3.10 * caloriesInputProfileDto.getHeight()) - (4.33 * caloriesInputProfileDto.getAge());
+        switch (caloriesInputProfileDto.getActivityLevel().toString()) {
+            case "SEDENTARY" -> calories *= 1.1;
+            case "LIGHTLY_ACTIVE" -> calories *= 1.2;
+            case "MODERATELY_ACTIVE" -> calories *= 1.35;
+            case "VERY_ACTIVE" -> calories *= 1.4;
+            case "EXTREMELY_ACTIVE" -> calories *= 1.6;
+        }
+
+        switch (caloriesInputProfileDto.getWeightControl().toString()) {
+            case "LOSS" -> {
+                return calories * 0.8;
+            }
+            case "GAIN" -> {
+                return calories * 1.2;
+            }
+            default -> {
+                return calories;
+            }
+        }
     }
 
     @Override
@@ -77,7 +107,8 @@ public class MealServiceImpl implements MealService {
     }
 
     /* provide a mea; pf certain type, filtered by meal type and calories. If no meal is found, increment calories difference by 0.5 */
-    private MealWithProductsAndTotalCaloriesDto getMeal(double coefficient, double requestedCaloriesForMeal, String mealType) {
+    private MealWithProductsAndTotalCaloriesDto getMeal(double coefficient,
+                                                        double requestedCaloriesForMeal, String mealType) {
         double finalCoefficient = coefficient + 0.5;
         List<MealWithProductsAndTotalCaloriesDto> meals = getAllMeals()
                 .getAllMeals()

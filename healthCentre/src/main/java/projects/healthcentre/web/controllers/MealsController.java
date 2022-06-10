@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import projects.healthcentre.model.dto.AllMealsDto;
+import projects.healthcentre.model.dto.CaloriesInputProfileDto;
 import projects.healthcentre.model.dto.MealSeedDto;
 import projects.healthcentre.model.dto.MealWithProductsAndTotalCaloriesDto;
 import projects.healthcentre.model.entity.Meal;
@@ -33,9 +34,9 @@ public class MealsController {
         return new ResponseEntity<>(mealService.getAllMeals(), HttpStatus.OK);
     }
 
-    @GetMapping({"/plan/{calories}"})
-    private ResponseEntity<Set<MealWithProductsAndTotalCaloriesDto>> getMealPlan(@PathVariable("calories") Long calories) {
-        return new ResponseEntity<>(mealService.offerMealPlan(calories), HttpStatus.OK);
+    @GetMapping({"/plan"})
+    private ResponseEntity<Set<MealWithProductsAndTotalCaloriesDto>> getMealPlan(CaloriesInputProfileDto caloriesInputProfileDto) {
+        return new ResponseEntity<>(mealService.offerMealPlan(caloriesInputProfileDto), HttpStatus.OK);
     }
 
 
