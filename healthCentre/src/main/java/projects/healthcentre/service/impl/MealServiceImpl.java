@@ -121,6 +121,7 @@ public class MealServiceImpl implements MealService {
                 .filter(m -> m.getTotalCalories() <= requestedCaloriesForMeal * (1 + finalCoefficient)
                         && m.getTotalCalories() >= requestedCaloriesForMeal * (1 - finalCoefficient))
                 .toList();
+//TODO: make query in repo - where mealType, calories in (lower coef, upper coef)
         if (!meals.isEmpty()) {
             int randomIndex = ThreadLocalRandom.current().nextInt(0, meals.size());
             return meals.get(randomIndex);

@@ -27,5 +27,4 @@ public class SignUpInputDto {
 
     @Length(min = 10)
     private String confirmPassword;
-
 }
