@@ -37,6 +37,7 @@ public class Meal {
 
     @OneToMany
     private Set<Picture> picture;
+
     @OneToMany(mappedBy = "meal")
     private Set<MealProducts> mealProducts;
 

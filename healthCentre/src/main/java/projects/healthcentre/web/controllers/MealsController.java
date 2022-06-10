@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import projects.healthcentre.model.dto.AllMealsDto;
-import projects.healthcentre.model.dto.CaloriesInputProfileDto;
-import projects.healthcentre.model.dto.MealSeedDto;
-import projects.healthcentre.model.dto.MealWithProductsAndTotalCaloriesDto;
+import projects.healthcentre.model.dto.*;
 import projects.healthcentre.model.entity.Meal;
 import projects.healthcentre.service.MealService;
 

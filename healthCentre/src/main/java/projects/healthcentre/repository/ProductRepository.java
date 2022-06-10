@@ -11,4 +11,6 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query(value = "SELECT p FROM Product p JOIN MealProducts mp JOIN Meal m WHERE m.id = :id")
     List<Product> findAllProductsByMealId(Long id);
+
+    Product findProductByName(String name);
 }

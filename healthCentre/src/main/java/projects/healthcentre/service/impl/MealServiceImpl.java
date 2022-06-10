@@ -12,6 +12,7 @@ import projects.healthcentre.model.entity.Product;
 import projects.healthcentre.repository.MealRepository;
 import projects.healthcentre.repository.ProductRepository;
 import projects.healthcentre.service.MealService;
+import projects.healthcentre.service.ProductService;
 
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
@@ -21,12 +22,14 @@ public class MealServiceImpl implements MealService {
     private final MealRepository mealRepository;
     private final ProductRepository productRepository;
     private final ModelMapper modelMapper;
+    private final ProductService productService;
 
     @Autowired
-    public MealServiceImpl(MealRepository mealRepository, ProductRepository productRepository, ModelMapper modelMapper) {
+    public MealServiceImpl(MealRepository mealRepository, ProductRepository productRepository, ModelMapper modelMapper, ProductService productService) {
         this.mealRepository = mealRepository;
         this.productRepository = productRepository;
         this.modelMapper = modelMapper;
+        this.productService = productService;
     }
 
 
@@ -69,7 +72,7 @@ public class MealServiceImpl implements MealService {
         return mealPlan;
     }
 
-    private double calculateCalories(CaloriesInputProfileDto caloriesInputProfileDto) {
+    public double calculateCalories(CaloriesInputProfileDto caloriesInputProfileDto) {
         double calories = 0D;
         calories = caloriesInputProfileDto.getGender().toString().equalsIgnoreCase("male")
                 ? (88.4 + 13.4 * caloriesInputProfileDto.getWeight())
@@ -99,16 +102,17 @@ public class MealServiceImpl implements MealService {
 
     @Override
     public Meal saveMeal(MealSeedDto mealSeedDto) {
-        Meal savedMeal = new Meal();
-        modelMapper.map(mealSeedDto, Meal.class);
+        Meal savedMeal = modelMapper.map(mealSeedDto, Meal.class);
+//        mealSeedDto.getProductWithQuantity().keySet().forEach(
+//                k -> savedMeal.getMealProducts().add(productService.findProductByName(k));
         //TODO link meal with products and quantities in the linking table
         mealRepository.save(savedMeal);
         return savedMeal;
     }
 
     /* provide a mea; pf certain type, filtered by meal type and calories. If no meal is found, increment calories difference by 0.5 */
-    private MealWithProductsAndTotalCaloriesDto getMeal(double coefficient,
-                                                        double requestedCaloriesForMeal, String mealType) {
+    public MealWithProductsAndTotalCaloriesDto getMeal(double coefficient,
+                                                       double requestedCaloriesForMeal, String mealType) {
         double finalCoefficient = coefficient + 0.5;
         List<MealWithProductsAndTotalCaloriesDto> meals = getAllMeals()
                 .getAllMeals()
