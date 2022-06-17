@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import projects.healthcentre.model.enums.MealType;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -36,7 +35,7 @@ public class Meal {
     private String videoUrl;
 
     @OneToMany
-    private Set<Picture> picture;
+    private Set<Picture> pictures;
 
     @OneToMany(mappedBy = "meal")
     private Set<MealProducts> mealProducts;

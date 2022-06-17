@@ -40,5 +40,5 @@ public class User {
     private UserType userType;
 
     @ManyToMany
-    private Set<Meal> mealPlan;
+    private Set<Meal> meals;
 }
