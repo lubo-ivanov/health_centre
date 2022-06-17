@@ -37,7 +37,7 @@ public class Product {
     @Column(name = "product_type", nullable = false)
     private ProductType productType;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(targetEntity = MealProducts.class, mappedBy = "product")
     private Set<MealProducts> mealProducts = new HashSet<>();
 
     @OneToOne

@@ -8,9 +8,11 @@ import projects.healthcentre.model.dto.CaloriesInputProfileDto;
 import projects.healthcentre.model.dto.MealSeedDto;
 import projects.healthcentre.model.dto.MealWithProductsAndTotalCaloriesDto;
 import projects.healthcentre.model.entity.Meal;
+import projects.healthcentre.model.entity.MealProducts;
 import projects.healthcentre.model.entity.Product;
 import projects.healthcentre.repository.MealRepository;
 import projects.healthcentre.repository.ProductRepository;
+import projects.healthcentre.service.MealProductsService;
 import projects.healthcentre.service.MealService;
 import projects.healthcentre.service.ProductService;
 
@@ -20,14 +22,15 @@ import java.util.concurrent.ThreadLocalRandom;
 @Service
 public class MealServiceImpl implements MealService {
     private final MealRepository mealRepository;
-    private final ProductRepository productRepository;
     private final ModelMapper modelMapper;
     private final ProductService productService;
 
+    private final MealProductsService mealProductsService;
+
     @Autowired
-    public MealServiceImpl(MealRepository mealRepository, ProductRepository productRepository, ModelMapper modelMapper, ProductService productService) {
+    public MealServiceImpl(MealRepository mealRepository, ModelMapper modelMapper, ProductService productService, MealProductsService mealProductsService) {
         this.mealRepository = mealRepository;
-        this.productRepository = productRepository;
+        this.mealProductsService = mealProductsService;
         this.modelMapper = modelMapper;
         this.productService = productService;
     }
@@ -40,7 +43,7 @@ public class MealServiceImpl implements MealService {
         Meal meal = mealRepository.getMealById(id);
         mealWithProducts.setName(meal.getName());
         mealWithProducts.setMealType(meal.getMealType());
-        List<Product> products = productRepository.findAllProductsByMealId(id);
+        List<Product> products = productService.findAllProductsByMealId(id);
         mealWithProducts.setProducts(products);
         mealWithProducts.setTotalCalories(products.stream()
                 .map(Product::getCalories)
@@ -102,15 +105,24 @@ public class MealServiceImpl implements MealService {
 
     @Override
     public Meal saveMeal(MealSeedDto mealSeedDto) {
-        Meal savedMeal = modelMapper.map(mealSeedDto, Meal.class);
-//        mealSeedDto.getProductWithQuantity().keySet().forEach(
-//                k -> savedMeal.getMealProducts().add(productService.findProductByName(k));
-        //TODO link meal with products and quantities in the linking table
+        Meal mealToSave = modelMapper.map(mealSeedDto, Meal.class);
+        Meal savedMeal = mealRepository.save(mealToSave);
+        Set<MealProducts> mealProducts = new HashSet<>();
+
+        mealSeedDto.getProductWithQuantity().forEach((productName, productQuantity) -> {
+            Product product = productService.findProductByName(productName);
+            MealProducts mealProduct = MealProducts.builder().product(product)
+                    .productQuantity(productQuantity).meal(savedMeal).build();
+            MealProducts savedMealProduct = mealProductsService.save(mealProduct);
+            mealProducts.add(savedMealProduct);
+        });
+        savedMeal.setMealProducts(mealProducts);
         mealRepository.save(savedMeal);
-        return savedMeal;
+        mealRepository.save(mealToSave);
+        return mealToSave;
     }
 
-    /* provide a mea; pf certain type, filtered by meal type and calories. If no meal is found, increment calories difference by 0.5 */
+    /* provide a meal of certain type, filtered by meal type and calories. If no meal is found, increment calories difference by 0.5 */
     public MealWithProductsAndTotalCaloriesDto getMeal(double coefficient,
                                                        double requestedCaloriesForMeal, String mealType) {
         double finalCoefficient = coefficient + 0.5;

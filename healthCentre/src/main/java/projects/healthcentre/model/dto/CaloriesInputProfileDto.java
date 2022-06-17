@@ -17,6 +17,7 @@ import javax.persistence.Enumerated;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CaloriesInputProfileDto {
+
     @Enumerated(EnumType.STRING)
     private Gender gender;
     private int age;
