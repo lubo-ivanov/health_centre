@@ -1,23 +1,24 @@
 package projects.healthcentre.model.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
+
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "pictures")
-public class Picture extends BaseEntity {
-    private String pictureUrl;
+public class Picture{
 
-    public Picture() {
-    }
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     @Column(name = "picture_url", nullable = false, unique = true)
-    public String getPictureUrl() {
-        return pictureUrl;
-    }
-
-    public void setPictureUrl(String pictureUrl) {
-        this.pictureUrl = pictureUrl;
-    }
+    private String pictureUrl;
 }

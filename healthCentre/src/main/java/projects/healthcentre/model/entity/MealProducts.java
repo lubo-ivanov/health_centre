@@ -1,57 +1,33 @@
 package projects.healthcentre.model.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.Objects;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "meals_products")
-public class MealProducts extends BaseEntity {
-    private Meal meal;
-    private Product product;
-    private Integer productQuantity;
+public class MealProducts {
 
-    public MealProducts() {
-    }
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "meal_id")
-    public Meal getMeal() {
-        return meal;
-    }
-
-    public void setMeal(Meal meal) {
-        this.meal = meal;
-    }
+    private Meal meal;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "product_id")
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
+    private Product product;
 
     @Column(name = "product_quantity", nullable = false)
-    public Integer getProductQuantity() {
-        return productQuantity;
-    }
-
-    public void setProductQuantity(Integer productQuantity) {
-        this.productQuantity = productQuantity;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        MealProducts that = (MealProducts) o;
-        return meal.equals(that.meal) && product.equals(that.product);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(meal, product);
-    }
+    private Integer productQuantity;
 }
