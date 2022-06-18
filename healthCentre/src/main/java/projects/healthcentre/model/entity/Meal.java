@@ -19,6 +19,7 @@ public class Meal {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "meal_id")
     private Long id;
 
     @Column(nullable = false, unique = true, columnDefinition = "VARCHAR(30)")
@@ -35,9 +36,9 @@ public class Meal {
     private String videoUrl;
 
     @OneToMany
+    @JoinColumn(name = "picture_id")
     private Set<Picture> pictures;
 
     @OneToMany(mappedBy = "meal")
     private Set<MealProducts> mealProducts;
-
 }

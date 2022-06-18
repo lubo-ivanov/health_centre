@@ -15,11 +15,11 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/")
-public class SignUpController {
+public class UserController {
     private final ValidationUtil validationUtil;
 
     @Autowired
-    public SignUpController(ValidationUtil validationUtil) {
+    public UserController(ValidationUtil validationUtil) {
         this.validationUtil = validationUtil;
     }
 

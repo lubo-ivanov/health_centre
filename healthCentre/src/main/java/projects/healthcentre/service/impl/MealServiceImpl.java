@@ -11,7 +11,6 @@ import projects.healthcentre.model.entity.Meal;
 import projects.healthcentre.model.entity.MealProducts;
 import projects.healthcentre.model.entity.Product;
 import projects.healthcentre.repository.MealRepository;
-import projects.healthcentre.repository.ProductRepository;
 import projects.healthcentre.service.MealProductsService;
 import projects.healthcentre.service.MealService;
 import projects.healthcentre.service.ProductService;

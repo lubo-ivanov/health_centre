@@ -18,6 +18,7 @@ public class Picture{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "picture_id")
     private Long id;
 
     @Column(name = "picture_url", nullable = false, unique = true)
